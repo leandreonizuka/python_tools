@@ -8,7 +8,6 @@ nombre = "0123456789"
 sysboles = "!§/?%µ$£^@&"
 
 carac = letter + nombre + sysboles + little_letter
-carac_sys = letter + nombre + little_letter
 
 
 print("#########################")
