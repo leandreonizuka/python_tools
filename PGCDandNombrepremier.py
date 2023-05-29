@@ -31,7 +31,7 @@ def PGCD():
 print("**calculateur Nombre premier et PGCD **")
 
 
-print("a = calculateur nombre premier \nb = calculateur PGCD de deux nombre")
+print("a = calculateur nombre premier \nb = calculateur PGCD de deux nombres")
 c = input("entrer votre choix: ")
 
 if c == "a":
@@ -39,4 +39,4 @@ if c == "a":
 elif c =="b":
     print(PGCD())
 else:
-    print("Mauvaise Entrer de l'utilisateur")
+    print("Mauvaise entrer de l'utilisateur =(")
