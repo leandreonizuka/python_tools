@@ -2,82 +2,72 @@ import re
 import string
 import termcolor
 import pyfiglet
-#Fonction
-def password_verificateur():
-    c = str(input("Entrer un mot de passe : "))
-    compteurlonguer = int()
-    compteurcarac = False
-    compteurmaj = int()
-    string_check = re.compile('[@_ù!#$%^&*()<>?/\|}{~:]')
-    wordlist = False
 
-    #boucles
-    for i in c:
-        compteurlonguer += 1
+#introduction des fonctions
+#logeur check
+def longeur(mot):
+    compteur = 0
+    for i in mot :
+        compteur += 1
+    return compteur
+#Maj check
+def Majcheck(mot):
+    compteurMaj = False
+    for i in mot :
         if i.isupper():
-            compteurmaj += 1
-        else:
-            compteurmaj += 0
+            compteurMaj = True
+    return compteurMaj
 
-    #compteur longueur check
-    if compteurlonguer >= 9:
-        termcolor.cprint("[✓] Ce mot de passe est long","blue")
-    else:
-        termcolor.cprint("[X] Ce mot de passe est trop court ","red")
+#spécial carac
+def carac(mot):
+    compteur = True
+    string_check = re.compile('[@_ù!#$%^&*()<>?/\|}{~:]')
+    if (string_check.search(mot) == None):
+        compteur = False
+    return compteur
 
-    #compteur caratéres spéciaux check
-    if (string_check.search(c) == None):
-        termcolor.cprint("[X] aucun caracteres spéciales détecter !","red")
-    else:
-        compteurcarac = True
-        termcolor.cprint("[✓] Ce mot de passe comporte des caracteres spéciaux","blue")
-
-    #maj check
-    if compteurmaj < 1:
-        termcolor.cprint("[X] Ce mot de passe ne comptient pas de majuscule ", "red")
-    else:
-        termcolor.cprint("[✓] Ce mot de passe comptient une ou des majuscules ", "blue")
-
-    #wordlist check
-    print("[~] Rockyou wordlist analyse ...")
+#wordlists analyse :
+def wordlist(mot):
+    compteur = False
     fichier = open("wordlist.txt", "r", encoding="utf-8", errors="ignore")
     contenu = [ligne.rstrip() for ligne in fichier.readlines()]
     fichier.close()
 
-    if c in contenu:
-        wordlist = True
-    else :
-        print("[✓] Ce mot de passe n'est pas dans une liste de mot de passe connue des hackers")
-        wordlist = False
-
-    #verdicte du programme
-    if compteurmaj > 0 and compteurcarac == True and compteurlonguer >= 9:
-        print("[*] Ce mot de passe est fort !!")
-    elif compteurmaj > 0 and compteurcarac == True and compteurlonguer < 9:
-        print("[~] CE mot de passe est trop petit ")
-    elif compteurmaj == 0 and compteurcarac == True and compteurlonguer >= 9:
-        print("[~] Ce mot de passe est pas mal mais il manque une majuscule !")
-    elif wordlist == True :
-        print("[X] Ce mot de passe est dans une liste de mot de passe trés connu des hackers ! Attention ")
-        hacked = pyfiglet.figlet_format("cracked")
-        print(hacked)
-    elif compteurmaj > 0 and compteurcarac == False and compteurlonguer >= 9:
-        print("[~] Le mot de passe est pas mal mais il manque un ou plusieur caractéres spéciales ! ")
-    else:
-        print("[X] le Mot de passe est faible ! =(")
+    if mot in contenu:
+        compteur = True
+    return compteur
 
 
-#Programmes initialisation
+#programmes initialisation
 ascii_banner = pyfiglet.figlet_format("PasswordVerrify")
 print(ascii_banner)
 termcolor.cprint("[*] Cette outil va déterminer si vous avez un mot de passe sécurisé.", "green")
-boucles = True
-while(boucles):
-    start = str(input("[*] Entré 'y' Pour commencer la vérification : "))
+boucle = True
+while(boucle):
+    c = input("[+] Entrez un mot de passe l'outil va vérifier si il est sécurisé : ")
+    # wordlist check
+    print("[~] Wordlists analyse... ")
+    if wordlist(c) == True:
+        print("[!] ATTENTION ce mot de passe est dans une liste de mot de passe qui a fuité donc trés connu des h4ckerM4n")
 
-    if start == "y":
-        boucles = False
-        password_verificateur()
-    else:
-        termcolor.cprint("[X] Mauvaise entré de l'utilisateur !", "red")
-        boucles = True
+    #mot de passe pas assez long
+    elif longeur(c) < 9 :
+        print("[✓]  votre mot de passe n'est pas dans un liste de mot de passe qui a fuité !")
+        print("ok pour longueur !")
+        boucle = False
+
+    #Maj dans mot de passe
+    elif Majcheck(c) == False:
+        print("[✓]  votre mot de passe n'est pas dans un liste de mot de passe qui a fuité !")
+        print("ok pour maj ! ")
+
+    #special carac dans mot de passe
+    elif carac(c) == False:
+        print("[✓]  votre mot de passe n'est pas dans un liste de mot de passe qui a fuité !")
+        print("ok pour carac ! ")
+    #Good password!
+    elif wordlist(c) == False and longeur(c) > 9 and Majcheck(c) == True and carac(c) == True:
+        print("ok pour bon mot de passe")
+    #mauvaise entré de l'utilisateur
+    else :
+        print("")
