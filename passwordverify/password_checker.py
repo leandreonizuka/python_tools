@@ -46,7 +46,7 @@ print(" Cet outil va déterminer si vous avez un mot de passe sécurisé.")
 boucle = True
 while(boucle):
     cprint("[*]", "blue", end="")
-    c = input(" Entrez un mot de passe, l'outil va vérifier s'il est sécurisé : ")
+    c = input(" Entrez un mot de passe, l'outil va vérifier s'il est sécurisé: ")
     # wordlist check
     cprint("[*]", "blue", end="")
     print(" Wordlists analyse...")
