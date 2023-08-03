@@ -52,7 +52,7 @@ while(boucle):
     print(" Wordlists analyse...")
     if wordlist(c) == True:
         cprint("[!]", "red", end="")
-        print("ATTENTION ce mot de passe est très connu des h4 ckerM4nsh4ckerm4 ns, il est conseillé de ne pas l'utiliser !")
+        print(" ATTENTION ce mot de passe est très connu des h4 ckerM4nsh4ckerm4 ns, il est conseillé de ne pas l'utiliser !")
 
     else:
         cprint("[+]", "green", end="")
